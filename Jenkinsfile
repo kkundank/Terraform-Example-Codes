@@ -13,6 +13,7 @@ pipeline {
         PATH = "$TF_HOME:$PATH"
         DYNAMODB_STATELOCK = "terraform-itrams-state-lock"
         PROJECT_S3_BUCKET = "terraform-itrams-remote-state"
+        KEY = "terraform.tfstate"
         USER_ACCESS_KEY = credentials('user_access_key')
         USER_SECRET_KEY = credentials('user_secret_key')
     }
@@ -23,7 +24,8 @@ pipeline {
                     sh 'terraform --version'
                     sh "terraform init -input=false \
                      --backend-config='dynamodb_table=$DYNAMODB_STATELOCK' --backend-config='bucket=$PROJECT_S3_BUCKET' \
-                     --backend-config='access_key=$USER_ACCESS_KEY' --backend-config='secret_key=$USER_SECRET_KEY'"
+                     --backend-config='access_key=$USER_ACCESS_KEY' --backend-config='secret_key=$USER_SECRET_KEY'
+                     --backend-config='key=$KEY'"
                     sh "echo \$PWD"
                     sh "whoami"
                 }
