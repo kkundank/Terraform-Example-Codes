@@ -36,8 +36,8 @@ pipeline {
                 dir('module/'){
                     script {
                         sh "terraform plan -var 'aws_access_key=$USER_ACCESS_KEY' -var 'aws_secret_key=$USER_SECRET_KEY' \
-                        -out terraform-networking.tfplan;echo \$? > status"
-                        stash name: "terraform-networking-plan", includes: "terraform-networking.tfplan"
+                        -out terraform-networking1.tfplan;echo \$? > status"
+                        stash name: "terraform-networking-plan1", includes: "terraform-networking1.tfplan"
                     }
                 }
             }
@@ -56,8 +56,8 @@ pipeline {
                     }
                     if(apply){
                         dir('module/'){
-                            unstash "terraform-networking-plan"
-                            sh 'terraform apply terraform-networking.tfplan'
+                            unstash "terraform-networking-plan1"
+                            sh 'terraform apply terraform-networking1.tfplan'
                         }
                     }
                 }
