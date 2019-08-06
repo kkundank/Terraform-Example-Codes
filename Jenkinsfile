@@ -20,7 +20,7 @@ pipeline {
         stage('NetworkInit'){
             steps {
                 dir('module/'){
-                    sh 'terraform --version'
+                    //sh 'terraform --version'
                     sh "terraform init -input=false -plugin-dir=/var/jenkins_home/terraform_plugins \
                      --backend-config='dynamodb_table=$DYNAMODB_STATELOCK' --backend-config='bucket=$NETWORKING_BUCKET' \
                      --backend-config='access_key=$USER_ACCESS_KEY' --backend-config='secret_key=$USER_SECRET_KEY'"
